@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94d4bf9ac7f4a933030e46a346ee2917",
+    "content-hash": "1cb311f8f246ec1470f3d54c1df51644",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -752,6 +752,47 @@
                 "storage"
             ],
             "time": "2019-05-20T20:21:14+00:00"
+        },
+        {
+            "name": "mapkyca/php-ogp",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mapkyca/php-ogp.git",
+                "reference": "f3bab8eb848bd19808ebea6582ee15d075095a1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mapkyca/php-ogp/zipball/f3bab8eb848bd19808ebea6582ee15d075095a1f",
+                "reference": "f3bab8eb848bd19808ebea6582ee15d075095a1f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ogp\\": "ogp/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Marcus Povey",
+                    "email": "marcus@marcus-povey.co.uk",
+                    "homepage": "https://www.marcus-povey.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple PHP Open Graph Protocol parser library",
+            "keywords": [
+                "opengraph"
+            ],
+            "time": "2019-05-18T10:54:57+00:00"
         },
         {
             "name": "monolog/monolog",
