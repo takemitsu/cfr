@@ -179,7 +179,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     img {
         max-height: 200px;
         max-width: 200px;

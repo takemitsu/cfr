@@ -22,14 +22,20 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'service_id' => 'integer',
+            'service_id' => 'nullable|integer',
             'sort_order' => 'string|in:default,review',
             'sort_asc' => 'string|in:asc,desc',
         ]);
 
         // そのうちソート追加する
 
-        return Project::paginate();
+        $project = Project::orderBy('id', 'desc');
+
+        if($request->filled('service_id')) {
+            $project = $project->where('service_id', $request->service_id);
+        }
+
+        return $project->paginate();
     }
 
     public function store(Request $request)
