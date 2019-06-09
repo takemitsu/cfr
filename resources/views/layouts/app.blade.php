@@ -38,6 +38,9 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+                        <li><router-link :to="{name: 'project-new'}">プロジェクト追加</router-link></li>
+
                         <!-- Authentication Links -->
                         @auth
                             <li class="nav-item dropdown">

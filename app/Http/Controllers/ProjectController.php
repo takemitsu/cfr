@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -33,15 +35,28 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'service_id' => 'required|exists:services,id',
+            // 'service_id' => 'required|exists:services,id',
             'url' => 'required|url',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image_url' => 'url',
+            'image_url' => 'nullable|string|url',
         ]);
 
+        $services = Service::all();
+        $service = null;
+        foreach ($services as $s) {
+            if (Str::startsWith($request->url, $s->url)) {
+                $service = $s;
+                break;
+            }
+        }
+
+        if ($service == null) {
+            abort(500, '指定のサービスは対応しておりません。');
+        }
+
         $project = new Project();
-        $project->service_id = $request->service_id;
+        $project->service_id = $service->id;
         $project->url = $request->url;
         $project->title = $request->title;
         $project->description = $request->description;
