@@ -10,7 +10,9 @@ class ReviewController extends Controller
 {
     public function index(Project $project)
     {
-        return $project->with('reviews');
+        return Review::where('project_id', $project->id)
+            ->orderBy('id', 'desc')
+            ->paginate();
     }
 
     public function store(Request $request, Project $project)

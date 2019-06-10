@@ -4,6 +4,9 @@ import VueRouter from 'vue-router'
 import ProjectList from './components/ProjectList'
 import ProjectEdit from './components/ProjectEdit'
 
+import ProjectDetail from './components/ProjectDetail'
+import ReviewEdit from './components/ReviewEdit'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -18,10 +21,25 @@ const routes = [
         name: 'project-new'
     },
     {
-        path: '/project/:id',
+        path: '/project/:id/edit',
         component: ProjectEdit,
         name: 'project-edit',
-    }
+    },
+    {
+        path: '/project/:id',
+        component: ProjectDetail,
+        name: 'project-detail',
+    },
+    {
+        path: '/project/:id/review/new',
+        component: ReviewEdit,
+        name: 'review-new',
+    },
+    {
+        path: '/project/:id/review/:review_id',
+        component: ReviewEdit,
+        name: 'review-edit',
+    },
 ]
 
 const router = new VueRouter({

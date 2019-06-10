@@ -1,37 +1,46 @@
 <template>
     <section id="project-edit">
 
-        <h3 style="margin-top: 10px;" v-if="form.id">Project Edit</h3>
-        <h3 style="margin-top: 10px;" v-else>New Project</h3>
+        <div class="small" style="margin: 10px 0;">
+            <router-link :to="{name: 'project-detail'}">{{project.title}}</router-link>
+        </div>
+
+        <h3 v-if="form.id">Review Edit</h3>
+        <h3 v-else>New Review</h3>
 
         <div v-show="!is_confirm">
 
             <div class="form-group">
-                <label>公式サイトURL:</label>
-                <div class="input-group">
-                    <input v-model="form.url" class="form-control" placeholder="公式サイトURL">
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-outline-primary" @click="getOgp()">OGP取得</button>
-                    </div>
-                </div>
+                <label>ニックネーム (必須)</label>
+                <input v-model="form.nickname" class="form-control" placeholder="ニックネーム">
             </div>
 
             <div class="form-group">
-                <label>プロジェクトタイトル:</label>
-                <input v-model="form.title" class="form-control" placeholder="プロジェクトタイトル">
+                <label>商品名等（あれば。省略可）</label>
+                <input v-model="form.product_name" class="form-control" placeholder="商品名など">
+            </div>
+
+            <!-- TODO: Star 系のコンポーネント -->
+            <div class="form-group">
+                <label>商　品</label>
+                <input v-model="form.score_product" type="range" class="custom-range" min="1" max="5">
+            </div>
+            <div class="form-group">
+                <label>実行者</label>
+                <input v-model="form.score_vendor" type="range" class="custom-range" min="1" max="5">
+            </div>
+            <div class="form-group">
+                <label>再購買</label>
+                <input v-model="form.score_retry" type="range" class="custom-range" min="1" max="5">
+            </div>
+            <div class="form-group">
+                <label>総合的</label>
+                <input v-model="form.score_total" type="range" class="custom-range" min="1" max="5">
             </div>
 
             <div class="form-group">
-                <label>説明等</label>
-                <textarea v-model="form.description" class="form-control" rows="6" placeholder="description"></textarea>
-            </div>
-
-            <div class="form-group">
-                image url:
-                <input v-model="form.image_url" class="form-control" placeholder="image url">
-                <div v-if="form.image_url">
-                    <img :src="form.image_url">
-                </div>
+                <label>コメント</label>
+                <textarea v-model="form.comment" class="form-control" rows="6" placeholder="コメント"></textarea>
             </div>
 
             <div class="form-group">
@@ -41,15 +50,17 @@
         </div>
         <div v-show="is_confirm">
             <div class="form-group">
-                <div v-if="form.image_url">
-                    <img :src="form.image_url">
-                    <hr>
-                </div>
-                <div>プロジェクトタイトル</div>
-                <div style="font-weight: bold;margin-bottom: 20px;">{{form.title}}</div>
-                <div>{{form.description}}</div>
-                <div style="margin-top: 20px;">公式サイトURL</div>
-                <div>{{form.url}}</div>
+
+
+                <div v-if="form.product_name" style="margin-bottom: 10px;">商品名: {{form.product_name}}</div>
+                <div style="white-space: pre-wrap; margin-bottom: 10px;">{{form.comment}}</div>
+                <div><small>商品の評価:</small> {{form.score_product}}</div>
+                <div><small>実行者評価:</small> {{form.score_vendor}}</div>
+                <div><small>再購買意欲:</small> {{form.score_retry}}</div>
+                <div><small>総合的評価:</small> {{form.score_total}}</div>
+                <div class="text-right">{{form.nickname}}</div>
+
+
             </div>
 
             <div class="form-group">
@@ -68,30 +79,43 @@
             return {
                 form: {
                     id: null,
-                    url: null,
-                    title: null,
-                    image_url: null,
-                    description: null,
+                    nickname: null,
+                    product_name: null,
+                    comment: null,
+
+                    score_product: 3,
+                    score_vendor: 3,
+                    score_retry: 3,
+                    score_total: 3,
                 },
                 is_confirm: false,
+                project: {},
             }
         },
         async mounted() {
             this.initFormData()
             if (this.$route.params.id) {
                 await this.getProject(this.$route.params.id)
+
+                if (this.$route.params.review_id) {
+                    await this.getReview(this.$route.params.id, this.$route.params.review_id)
+                }
             }
+
         },
         methods: {
             initFormData() {
                 this.is_confirm = false
                 this.form = {
                     id: null,
-                    url: null,
-                    title: null,
-                    image_url: null,
-                    description: null,
-                    service_id: null,
+                    nickname: null,
+                    product_name: null,
+                    comment: null,
+
+                    score_product: 3,
+                    score_vendor: 3,
+                    score_retry: 3,
+                    score_total: 3,
                 }
             },
             async getOgp() {
@@ -118,6 +142,18 @@
                 return axios.get('/project/' + encodeURIComponent(id))
                     .then(res => {
                         console.log(res)
+                        this.project = res.data
+                    })
+                    .catch(e => {
+                        console.error(e)
+                        alert('エラーが発生しました。トップに移動します。')
+                        this.$router.push({'name': 'top'})
+                    })
+            },
+            async getReview(project_id, review_id) {
+                return axios.get('/project/' + encodeURIComponent(project_id) + '/review/' + encodeURIComponent(review_id))
+                    .then(res => {
+                        console.log(res)
                         this.form = res.data
                     })
                     .catch(e => {
@@ -133,11 +169,11 @@
 
             submit() {
                 var method = 'post'
-                var url = 'project'
+                var url = 'project/' + encodeURIComponent(this.project.id) + '/review'
 
                 if (this.form.id) {
                     method = 'put'
-                    url = 'project/' + encodeURIComponent(this.form.id)
+                    url = url + '/' + encodeURIComponent(this.form.id)
                 }
                 axios({
                     method: method,
@@ -145,7 +181,7 @@
                     data: this.form
                 })
                     .then(res => {
-                        this.$router.push({'name': 'top'})
+                        this.$router.push({'name': 'project-detail'})
                     })
                     .catch(error => {
                         console.error(error)

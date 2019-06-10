@@ -23,4 +23,4 @@ Route::get('ogp', 'ProjectController@getOgp')->name('ogp');
 
 Route::apiResource('service', 'ServiceController');
 Route::apiResource('project', 'ProjectController');
-Route::apiResource('project.Review', 'ReviewController');
+Route::apiResource('project.review', 'ReviewController');

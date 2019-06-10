@@ -1,34 +1,40 @@
 <template>
-    <section id="project-list">
+    <section id="project-detail">
 
-        <div class="form-group" style="margin: 20px 0;">
-            <select v-model="params.service_id" class="form-control" @change="fetchData()">
-                <option value="">選択してください</option>
-                <option v-for="service in services" :value="service.id">{{service.name}}</option>
-            </select>
-        </div>
-
-        <div v-for="project in projects.data" style="margin-bottom: 20px;">
+        <div v-if="project" style="margin-bottom: 20px;">
 
             <div v-if="project.image_url">
                 <img :src="project.image_url" style="margin-bottom: 10px;">
             </div>
             <div style="font-weight: bold;margin-bottom: 20px;">{{project.title}}</div>
 
-            <div class="text-center">
-                <router-link class="btn btn-primary" :to="{name: 'project-detail', params: {id: project.id}}">more</router-link>
-            </div>
+            <div class="small">{{project.description}}</div>
 
+            <div class="text-center" style="margin-top: 20px;">
+                <router-link class="btn btn-primary" :to="{name: 'review-new', params: {id: project.id}}">New Review</router-link>
+            </div>
         </div>
 
-        <div v-if="projects.total === 0">
-            プロジェクトが登録されていないか、検索条件にヒットしませんでした。
+        <div v-for="review in reviews.data">
+            <hr>
+            <div v-if="review.product_name" style="margin-bottom: 10px; font-weight: bold;">{{review.product_name}}</div>
+            <div style="white-space: pre-wrap; margin-bottom: 10px;">{{review.comment}}</div>
+            <div><small>商品の評価:</small> {{review.score_product}}</div>
+            <div><small>実行者評価:</small> {{review.score_vendor}}</div>
+            <div><small>再購買意欲:</small> {{review.score_retry}}</div>
+            <div><small>総合的評価:</small> {{review.score_total}}</div>
+            <div class="text-right">{{review.updated_at}}</div>
+            <div class="text-right">{{review.nickname}}</div>
+        </div>
+
+        <div v-if="reviews.total === 0">
+            レビューが登録されていません。
         </div>
 
         <div v-else style="margin-top: 20px;">
             <div>
-                全部で {{projects.total}} 件<br>
-                {{projects.from}} 件目から {{projects.to}} 件目まで表示中
+                全部で {{reviews.total}} 件<br>
+                {{reviews.from}} 件目から {{reviews.to}} 件目まで表示中
             </div>
 
             <!-- TODO: Pagination 計算して表示する (このままだと vue router ではなく laravel api につながる)
@@ -51,10 +57,7 @@
     export default {
         data() {
             return {
-                params: {
-
-                },
-                projects: {
+                reviews: {
                     data: [],
 
                     from: null,
@@ -68,34 +71,32 @@
                     prev_page_url: null,
                     per_page: null,
                 },
-                services: [],
+                project: {},
             }
         },
         mounted() {
-            console.log('Project Component mounted.')
-            this.fetchData()
-            this.getServices()
+            this.fetchData(this.$route.params.id)
+            this.getReviews(this.$route.params.id)
         },
         methods: {
-            async fetchData() {
-                axios.get('project', {params: this.params})
+            async fetchData(project_id) {
+                axios.get('project/' + encodeURIComponent(project_id))
                     .then(res => {
-                        this.projects = res.data
-                        console.log(res.data)
+                        this.project = res.data
                     })
                     .catch(e => {
                         console.error(e)
                     })
             },
-            async getServices(){
-                axios.get('service')
+            async getReviews(project_id) {
+                axios.get('project/' + encodeURIComponent(project_id) + '/review')
                     .then(res => {
-                        this.services = res.data
+                        this.reviews = res.data
                     })
                     .catch(e => {
                         console.error(e)
                     })
-            }
+            },
         }
     }
 </script>
