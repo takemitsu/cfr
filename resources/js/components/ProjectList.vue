@@ -8,15 +8,30 @@
             </select>
         </div>
 
-        <div v-for="project in projects.data" style="margin-bottom: 20px;">
+        <div v-for="project in projects.data" style="margin-bottom: 30px;">
 
             <div v-if="project.image_url">
                 <img :src="project.image_url" style="margin-bottom: 10px;">
             </div>
-            <div style="font-weight: bold;margin-bottom: 20px;">{{project.title}}</div>
+
+            <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+                <div style="flex: 0 1 160px;">
+                     <div class="text-center">{{project.service.name}}</div>
+                    <div class="text-center">
+                        <star-rating :inline="true" :star-size="15" :read-only="true" :show-rating="false" :increment="0.01" v-model="project.score_total"></star-rating>
+                    </div>
+                    <div class="text-center">{{project.review_count}} <small>Reviews</small></div>
+                    <div class="text-center">
+                        <a :href="project.url" target="_blank">公式サイト</a>
+                    </div>
+                </div>
+                <div style="flex: 1 2 auto;">
+                    {{project.title}}
+                </div>
+            </div>
 
             <div class="text-center">
-                <router-link class="btn btn-primary" :to="{name: 'project-detail', params: {id: project.id}}">more</router-link>
+                <router-link class="btn btn-primary" :to="{name: 'project-detail', params: {id: project.id}}">view Review / registration Review</router-link>
             </div>
 
         </div>
@@ -48,7 +63,11 @@
 </template>
 
 <script>
+    import StarRating from 'vue-star-rating'
     export default {
+        components: {
+            StarRating,
+        },
         data() {
             return {
                 params: {

@@ -6,7 +6,21 @@
             <div v-if="project.image_url">
                 <img :src="project.image_url" style="margin-bottom: 10px;">
             </div>
-            <div style="font-weight: bold;margin-bottom: 20px;">{{project.title}}</div>
+            <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+                <div style="flex: 0 1 160px;">
+                    <div class="text-center" v-if="project.service">{{project.service.name}}</div>
+                    <div class="text-center">
+                        <star-rating :inline="true" :star-size="15" :read-only="true" :show-rating="false" :increment="0.01" v-model="project.score_total"></star-rating>
+                    </div>
+                    <div class="text-center">{{project.review_count}} <small>Reviews</small></div>
+                    <div class="text-center">
+                        <a :href="project.url" target="_blank">公式サイト</a>
+                    </div>
+                </div>
+                <div style="flex: 1 2 auto;">
+                    {{project.title}}
+                </div>
+            </div>
 
             <div class="small">{{project.description}}</div>
 
@@ -19,10 +33,24 @@
             <hr>
             <div v-if="review.product_name" style="margin-bottom: 10px; font-weight: bold;">{{review.product_name}}</div>
             <div style="white-space: pre-wrap; margin-bottom: 10px;">{{review.comment}}</div>
-            <div><small>商品の評価:</small> {{review.score_product}}</div>
-            <div><small>実行者評価:</small> {{review.score_vendor}}</div>
-            <div><small>再購買意欲:</small> {{review.score_retry}}</div>
-            <div><small>総合的評価:</small> {{review.score_total}}</div>
+
+            <div>
+                <small style="margin-right: 10px;">商　品:</small>
+                <star-rating :inline="true" :star-size="20" :read-only="true" v-model="review.score_product"></star-rating>
+            </div>
+            <div>
+                <small style="margin-right: 10px;">実行者:</small>
+                <star-rating :inline="true" :star-size="20" :read-only="true" v-model="review.score_vendor"></star-rating>
+            </div>
+            <div>
+                <small style="margin-right: 10px;">再購買:</small>
+                <star-rating :inline="true" :star-size="20" :read-only="true" v-model="review.score_retry"></star-rating>
+            </div>
+            <div>
+                <small style="margin-right: 10px;">総　合:</small>
+                <star-rating :inline="true" :star-size="20" :read-only="true" v-model="review.score_total"></star-rating>
+            </div>
+
             <div class="text-right">{{review.updated_at}}</div>
             <div class="text-right">{{review.nickname}}</div>
         </div>
@@ -54,7 +82,11 @@
 </template>
 
 <script>
+    import StarRating from 'vue-star-rating'
     export default {
+        components: {
+            StarRating,
+        },
         data() {
             return {
                 reviews: {

@@ -29,13 +29,22 @@ class ProjectController extends Controller
 
         // そのうちソート追加する
 
-        $project = Project::orderBy('id', 'desc');
+        $projects = Project::with('service')
+            ->with('reviews')
+            ->orderBy('id', 'desc');
 
         if($request->filled('service_id')) {
-            $project = $project->where('service_id', $request->service_id);
+            $projects = $projects->where('service_id', $request->service_id);
         }
 
-        return $project->paginate();
+        $projects = $projects->paginate();
+
+        foreach ($projects as $project) {
+            $project->score_total = $project->reviews->avg('score_total');
+            $project->review_count = $project->reviews->count();
+            unset($project->reviews);
+        }
+        return $projects;
     }
 
     public function store(Request $request)
@@ -74,7 +83,12 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        return $project->load('reviews');
+        $project->load('reviews');
+        $project->score_total = $project->reviews->avg('score_total');
+        $project->review_count = $project->reviews->count();
+        unset($project->reviews);
+
+        return $project->load('service');
     }
 
     public function update(Request $request, Project $project)

@@ -22,10 +22,10 @@ class ReviewController extends Controller
             'product_name' => 'string|nullable',
             'comment' => 'required|string',
 
-            'score_product' => 'required|integer|min:1|max:5', // 商品
-            'score_vendor' => 'required|integer|min:1|max:5', // 実行者
-            'score_retry' => 'required|integer|min:1|max:5', // また買いたい
-            'score_total' => 'required|integer|min:1|max:5', // 総合
+            'score_product' => 'required|integer|min:0|max:5', // 商品
+            'score_vendor' => 'required|integer|min:0|max:5', // 実行者
+            'score_retry' => 'required|integer|min:0|max:5', // また買いたい
+            'score_total' => 'required|integer|min:0|max:5', // 総合
         ]);
 
         $review = new Review();

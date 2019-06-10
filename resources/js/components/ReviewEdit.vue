@@ -22,29 +22,29 @@
 
             <!-- TODO: Star 系のコンポーネント -->
             <div class="form-group">
-                <label>商　品</label>
-                <input v-model="form.score_product" type="range" class="custom-range" min="1" max="5">
+                <label>商 品 (必須)</label>
+                <star-rating v-model="form.score_product"></star-rating>
             </div>
             <div class="form-group">
-                <label>実行者</label>
-                <input v-model="form.score_vendor" type="range" class="custom-range" min="1" max="5">
+                <label>実行者 (必須)</label>
+                <star-rating v-model="form.score_vendor"></star-rating>
             </div>
             <div class="form-group">
-                <label>再購買</label>
-                <input v-model="form.score_retry" type="range" class="custom-range" min="1" max="5">
+                <label>再購買 (必須)</label>
+                <star-rating v-model="form.score_retry"></star-rating>
             </div>
             <div class="form-group">
-                <label>総合的</label>
-                <input v-model="form.score_total" type="range" class="custom-range" min="1" max="5">
+                <label>総 合 (必須)</label>
+                <star-rating v-model="form.score_total"></star-rating>
             </div>
 
             <div class="form-group">
-                <label>コメント</label>
+                <label>コメント (必須)</label>
                 <textarea v-model="form.comment" class="form-control" rows="6" placeholder="コメント"></textarea>
             </div>
 
             <div class="form-group">
-                <button type="button" class="btn btn-primary" @click="change_confirm()">check</button>
+                <button type="button" class="btn btn-primary btn-block" @click="change_confirm()">Check</button>
             </div>
 
         </div>
@@ -54,18 +54,34 @@
 
                 <div v-if="form.product_name" style="margin-bottom: 10px;">商品名: {{form.product_name}}</div>
                 <div style="white-space: pre-wrap; margin-bottom: 10px;">{{form.comment}}</div>
-                <div><small>商品の評価:</small> {{form.score_product}}</div>
-                <div><small>実行者評価:</small> {{form.score_vendor}}</div>
-                <div><small>再購買意欲:</small> {{form.score_retry}}</div>
-                <div><small>総合的評価:</small> {{form.score_total}}</div>
+                <div><small>商　品:</small> {{form.score_product}}</div>
+
+                <div>
+                    <small style="margin-right: 10px;">商　品:</small>
+                    <star-rating :inline="true" :star-size="25" :read-only="true" v-model="form.score_product"></star-rating>
+                </div>
+                <div>
+                    <small style="margin-right: 10px;">実行者:</small>
+                    <star-rating :inline="true" :star-size="25" :read-only="true" v-model="form.score_vendor"></star-rating>
+                </div>
+                <div>
+                    <small style="margin-right: 10px;">再購買:</small>
+                    <star-rating :inline="true" :star-size="25" :read-only="true" v-model="form.score_retry"></star-rating>
+                </div>
+                <div>
+                    <small style="margin-right: 10px;">総　合:</small>
+                    <star-rating :inline="true" :star-size="25" :read-only="true" v-model="form.score_total"></star-rating>
+                </div>
+
                 <div class="text-right">{{form.nickname}}</div>
-
-
             </div>
 
             <div class="form-group">
-                <button type="button" class="btn btn-secondary" @click="is_confirm=false">edit</button>
-                <button type="button" class="btn btn-primary" @click="submit()">finish</button>
+                <button type="button" class="btn btn-secondary btn-block" @click="is_confirm=false">Back</button>
+
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary btn-block" @click="submit()">Registration Review!!</button>
             </div>
         </div>
 
@@ -74,7 +90,11 @@
 </template>
 
 <script>
+    import StarRating from 'vue-star-rating'
     export default {
+        components: {
+            StarRating,
+        },
         data() {
             return {
                 form: {
@@ -83,10 +103,10 @@
                     product_name: null,
                     comment: null,
 
-                    score_product: 3,
-                    score_vendor: 3,
-                    score_retry: 3,
-                    score_total: 3,
+                    score_product: 0,
+                    score_vendor: 0,
+                    score_retry: 0,
+                    score_total: 0,
                 },
                 is_confirm: false,
                 project: {},
@@ -112,10 +132,10 @@
                     product_name: null,
                     comment: null,
 
-                    score_product: 3,
-                    score_vendor: 3,
-                    score_retry: 3,
-                    score_total: 3,
+                    score_product: 0,
+                    score_vendor: 0,
+                    score_retry: 0,
+                    score_total: 0,
                 }
             },
             async getOgp() {
@@ -164,6 +184,33 @@
             },
 
             change_confirm() {
+
+                if (this.form.nickname == null) {
+                    alert('ニックネームを入力してください')
+                    return
+                }
+                if (this.form.comment == null) {
+                    alert('コメントを入力してください')
+                    return
+                }
+
+                if (this.form.score_product === 0) {
+                    alert('評価は全てチェックしてください')
+                    return
+                }
+                if (this.form.score_vendor === 0) {
+                    alert('評価は全てチェックしてください')
+                    return
+                }
+                if (this.form.score_retry === 0) {
+                    alert('評価は全てチェックしてください')
+                    return
+                }
+                if (this.form.score_total === 0) {
+                    alert('評価は全てチェックしてください')
+                    return
+                }
+
                 this.is_confirm = true
             },
 
