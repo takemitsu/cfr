@@ -20,10 +20,9 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app" class="row">
-        <div class="col-sm-12 col-md-4 offset-md-4">
+    <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container-fluid">
+            <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -67,10 +66,17 @@
             </div>
         </nav>
 
-        <main class="container" style="margin-top: 20px;">
+        <main class="container" style="margin-top: 20px; margin-bottom: 20px;">
             @yield('content')
         </main>
-        </div>
+
+        <footer class="footer mt-auto py-3 text-right container">
+            <span class="text-muted">Copyright &copy; 2019 Notespace.inc All right reserved.</span>
+        </footer>
+
     </div>
+
+
+
 </body>
 </html>

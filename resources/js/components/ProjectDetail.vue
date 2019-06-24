@@ -60,22 +60,16 @@
         </div>
 
         <div v-else style="margin-top: 20px;">
-            <div>
-                全部で {{reviews.total}} 件<br>
-                {{reviews.from}} 件目から {{reviews.to}} 件目まで表示中
+            <div class="text-center">
+                {{reviews.to}} / {{reviews.total}} を表示中
             </div>
+            <div v-if="reviews.total > reviews.to" class="text-center">
+                <button type="button" @click="loadMore()" class="btn btn-secondary">More Reviews</button>
+            </div>
+        </div>
 
-            <!-- TODO: Pagination 計算して表示する (このままだと vue router ではなく laravel api につながる)
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item" v-if="projects.first_page_url"><a class="page-link" :href="projects.first_page_url">first</a></li>
-                    <li class="page-item" v-if="projects.prev_page_url"><a class="page-link" :href="projects.prev_page_url">prev</a></li>
-                    <li class="page-item" v-if="projects.next_page_url"><a class="page-link" :href="projects.next_page_url">next</a></li>
-                    <li class="page-item" v-if="projects.last_page_url"><a class="page-link" :href="projects.last_page_url">last</a></li>
-                </ul>
-            </nav>
-            -->
-
+        <div class="text-center" style="margin-top: 20px;">
+            <router-link class="btn btn-primary" :to="{name: 'review-new', params: {id: project.id}}">New Review</router-link>
         </div>
 
     </section>
@@ -89,6 +83,9 @@
         },
         data() {
             return {
+                params: {
+                    page: 1,
+                },
                 reviews: {
                     data: [],
 
@@ -104,11 +101,12 @@
                     per_page: null,
                 },
                 project: {},
+                project_id: this.$route.params.id
             }
         },
         mounted() {
             this.fetchData(this.$route.params.id)
-            this.getReviews(this.$route.params.id)
+            this.getReviews()
         },
         methods: {
             async fetchData(project_id) {
@@ -120,14 +118,35 @@
                         console.error(e)
                     })
             },
-            async getReviews(project_id) {
-                axios.get('project/' + encodeURIComponent(project_id) + '/review')
+            async getReviews() {
+                axios.get('project/' + encodeURIComponent(this.project_id) + '/review', {params: this.params})
                     .then(res => {
-                        this.reviews = res.data
+                        // this.reviews = res.data
+
+
+                        if(this.params.page === 1) {
+                            this.reviews = res.data
+                        } else {
+                            const response = res.data
+                            this.reviews.from =response.from
+                            this.reviews.to = response.to
+                            this.reviews.current_page = response.current_page
+                            this.reviews.per_page = response.per_page
+                            this.reviews.total = response.total
+
+                            for (let review of res.data.data) {
+                                this.reviews.data.push (review)
+                            }
+                        }
+
                     })
                     .catch(e => {
                         console.error(e)
                     })
+            },
+            loadMore() {
+                this.params.page = this.reviews.current_page + 1
+                this.getReviews()
             },
         }
     }

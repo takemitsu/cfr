@@ -2,7 +2,7 @@
     <section id="project-list">
 
         <div class="form-group" style="margin: 20px 0;">
-            <select v-model="params.service_id" class="form-control" @change="fetchData()">
+            <select v-model="params.service_id" class="form-control" @change="changeService()">
                 <option value="">選択してください</option>
                 <option v-for="service in services" :value="service.id">{{service.name}}</option>
             </select>
@@ -41,22 +41,13 @@
         </div>
 
         <div v-else style="margin-top: 20px;">
-            <div>
-                全部で {{projects.total}} 件<br>
-                {{projects.from}} 件目から {{projects.to}} 件目まで表示中
+            <div class="text-center">
+                {{projects.to}} / {{projects.total}} を表示中
             </div>
 
-            <!-- TODO: Pagination 計算して表示する (このままだと vue router ではなく laravel api につながる)
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item" v-if="projects.first_page_url"><a class="page-link" :href="projects.first_page_url">first</a></li>
-                    <li class="page-item" v-if="projects.prev_page_url"><a class="page-link" :href="projects.prev_page_url">prev</a></li>
-                    <li class="page-item" v-if="projects.next_page_url"><a class="page-link" :href="projects.next_page_url">next</a></li>
-                    <li class="page-item" v-if="projects.last_page_url"><a class="page-link" :href="projects.last_page_url">last</a></li>
-                </ul>
-            </nav>
-            -->
-
+            <div v-if="projects.total > projects.to" class="text-center">
+                <button type="button" @click="loadMore()" class="btn btn-secondary">More Projects</button>
+            </div>
         </div>
 
     </section>
@@ -71,7 +62,7 @@
         data() {
             return {
                 params: {
-
+                    page: 1,
                 },
                 projects: {
                     data: [],
@@ -91,7 +82,6 @@
             }
         },
         mounted() {
-            console.log('Project Component mounted.')
             this.fetchData()
             this.getServices()
         },
@@ -99,8 +89,20 @@
             async fetchData() {
                 axios.get('project', {params: this.params})
                     .then(res => {
-                        this.projects = res.data
-                        console.log(res.data)
+                        if(this.params.page === 1) {
+                            this.projects = res.data
+                        } else {
+                            const response = res.data
+                            this.projects.from =response.from
+                            this.projects.to = response.to
+                            this.projects.current_page = response.current_page
+                            this.projects.per_page = response.per_page
+                            this.projects.total = response.total
+
+                            for (let project of res.data.data) {
+                                this.projects.data.push (project)
+                            }
+                        }
                     })
                     .catch(e => {
                         console.error(e)
@@ -114,6 +116,14 @@
                     .catch(e => {
                         console.error(e)
                     })
+            },
+            loadMore() {
+                this.params.page = this.projects.current_page + 1
+                this.fetchData()
+            },
+            changeService() {
+                this.params.page = 1
+                this.fetchData()
             }
         }
     }
