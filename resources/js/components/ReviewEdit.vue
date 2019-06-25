@@ -1,96 +1,107 @@
 <template>
-    <section id="project-edit">
+    <section id="project-edit" class="row justify-content-center">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
 
-        <div class="small" style="margin: 10px 0;">
-            <router-link :to="{name: 'project-detail'}">{{project.title}}</router-link>
+            <div class="small" style="margin: 10px 0;">
+                <router-link :to="{name: 'project-detail'}">{{project.title}}</router-link>
+            </div>
+
+            <h3 v-if="form.id">Review Edit</h3>
+            <h3 v-else>New Review</h3>
+
+            <div v-show="!is_confirm">
+
+                <div class="form-group">
+                    <label>ニックネーム (必須)</label>
+                    <input v-model="form.nickname" class="form-control" placeholder="ニックネーム">
+                </div>
+
+                <div class="form-group">
+                    <label>商品名等（あれば。省略可）</label>
+                    <input v-model="form.product_name" class="form-control" placeholder="商品名など">
+                </div>
+
+                <!-- TODO: Star 系のコンポーネント -->
+                <div class="form-group">
+                    <label>商 品 (必須)</label>
+                    <star-rating v-model="form.score_product"></star-rating>
+                </div>
+                <div class="form-group">
+                    <label>実行者 (必須)</label>
+                    <star-rating v-model="form.score_vendor"></star-rating>
+                </div>
+                <div class="form-group">
+                    <label>再購買 (必須)</label>
+                    <star-rating v-model="form.score_retry"></star-rating>
+                </div>
+                <div class="form-group">
+                    <label>総 合 (必須)</label>
+                    <star-rating v-model="form.score_total"></star-rating>
+                </div>
+
+                <div class="form-group">
+                    <label>コメント (必須)</label>
+                    <textarea v-model="form.comment" class="form-control" rows="6" placeholder="コメント"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-block" @click="change_confirm()">Confirm</button>
+                </div>
+
+            </div>
+            <div v-show="is_confirm">
+                <div class="form-group">
+
+
+                    <div v-if="form.product_name" style="margin-bottom: 10px;">商品名: {{form.product_name}}</div>
+                    <div style="white-space: pre-wrap; margin-bottom: 10px;">{{form.comment}}</div>
+                    <div>
+                        <small>商　品:</small>
+                        {{form.score_product}}
+                    </div>
+
+                    <div>
+                        <small style="margin-right: 10px;">商　品:</small>
+                        <star-rating :inline="true" :star-size="25" :read-only="true"
+                                     v-model="form.score_product"></star-rating>
+                    </div>
+                    <div>
+                        <small style="margin-right: 10px;">実行者:</small>
+                        <star-rating :inline="true" :star-size="25" :read-only="true"
+                                     v-model="form.score_vendor"></star-rating>
+                    </div>
+                    <div>
+                        <small style="margin-right: 10px;">再購買:</small>
+                        <star-rating :inline="true" :star-size="25" :read-only="true"
+                                     v-model="form.score_retry"></star-rating>
+                    </div>
+                    <div>
+                        <small style="margin-right: 10px;">総　合:</small>
+                        <star-rating :inline="true" :star-size="25" :read-only="true"
+                                     v-model="form.score_total"></star-rating>
+                    </div>
+
+                    <div class="text-right">{{form.nickname}}</div>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-secondary btn-block" @click="is_confirm=false">Back to Edit page</button>
+
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-block" @click="submit()">
+                        Registration Review!!
+                    </button>
+                </div>
+            </div>
+
         </div>
-
-        <h3 v-if="form.id">Review Edit</h3>
-        <h3 v-else>New Review</h3>
-
-        <div v-show="!is_confirm">
-
-            <div class="form-group">
-                <label>ニックネーム (必須)</label>
-                <input v-model="form.nickname" class="form-control" placeholder="ニックネーム">
-            </div>
-
-            <div class="form-group">
-                <label>商品名等（あれば。省略可）</label>
-                <input v-model="form.product_name" class="form-control" placeholder="商品名など">
-            </div>
-
-            <!-- TODO: Star 系のコンポーネント -->
-            <div class="form-group">
-                <label>商 品 (必須)</label>
-                <star-rating v-model="form.score_product"></star-rating>
-            </div>
-            <div class="form-group">
-                <label>実行者 (必須)</label>
-                <star-rating v-model="form.score_vendor"></star-rating>
-            </div>
-            <div class="form-group">
-                <label>再購買 (必須)</label>
-                <star-rating v-model="form.score_retry"></star-rating>
-            </div>
-            <div class="form-group">
-                <label>総 合 (必須)</label>
-                <star-rating v-model="form.score_total"></star-rating>
-            </div>
-
-            <div class="form-group">
-                <label>コメント (必須)</label>
-                <textarea v-model="form.comment" class="form-control" rows="6" placeholder="コメント"></textarea>
-            </div>
-
-            <div class="form-group">
-                <button type="button" class="btn btn-primary btn-block" @click="change_confirm()">Check</button>
-            </div>
-
-        </div>
-        <div v-show="is_confirm">
-            <div class="form-group">
-
-
-                <div v-if="form.product_name" style="margin-bottom: 10px;">商品名: {{form.product_name}}</div>
-                <div style="white-space: pre-wrap; margin-bottom: 10px;">{{form.comment}}</div>
-                <div><small>商　品:</small> {{form.score_product}}</div>
-
-                <div>
-                    <small style="margin-right: 10px;">商　品:</small>
-                    <star-rating :inline="true" :star-size="25" :read-only="true" v-model="form.score_product"></star-rating>
-                </div>
-                <div>
-                    <small style="margin-right: 10px;">実行者:</small>
-                    <star-rating :inline="true" :star-size="25" :read-only="true" v-model="form.score_vendor"></star-rating>
-                </div>
-                <div>
-                    <small style="margin-right: 10px;">再購買:</small>
-                    <star-rating :inline="true" :star-size="25" :read-only="true" v-model="form.score_retry"></star-rating>
-                </div>
-                <div>
-                    <small style="margin-right: 10px;">総　合:</small>
-                    <star-rating :inline="true" :star-size="25" :read-only="true" v-model="form.score_total"></star-rating>
-                </div>
-
-                <div class="text-right">{{form.nickname}}</div>
-            </div>
-
-            <div class="form-group">
-                <button type="button" class="btn btn-secondary btn-block" @click="is_confirm=false">Back</button>
-
-            </div>
-            <div class="form-group">
-                <button type="button" class="btn btn-primary btn-block" @click="submit()">Registration Review!!</button>
-            </div>
-        </div>
-
-
     </section>
 </template>
 
 <script>
     import StarRating from 'vue-star-rating'
+
     export default {
         components: {
             StarRating,
