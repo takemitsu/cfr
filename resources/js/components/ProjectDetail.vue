@@ -1,6 +1,6 @@
 <template>
     <section id="project-detail" class="row justify-content-center">
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+        <div class="col-xl-6 col-lg-6 col-md-8 col-sm-12">
             <div v-if="project" style="margin-bottom: 20px;">
 
                 <div v-if="project.image_url">

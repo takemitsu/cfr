@@ -1,6 +1,6 @@
 <template>
     <section id="project-edit" class="row justify-content-center">
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+        <div class="col-xl-6 col-lg-6 col-md-8 col-sm-12">
 
             <div class="small" style="margin: 10px 0;">
                 <router-link :to="{name: 'project-detail'}">{{project.title}}</router-link>
