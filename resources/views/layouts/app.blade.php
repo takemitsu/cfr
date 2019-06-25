@@ -33,7 +33,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li><router-link :to="{name: 'about'}" class="btn btn-link">about</router-link></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -70,13 +70,19 @@
             @yield('content')
         </main>
 
-        <footer class="footer mt-auto py-3 text-right container">
-            <span class="text-muted">Copyright &copy; 2019 Notespace.inc All right reserved.</span>
+        <footer class="footer mt-auto py-3 container" style="border-top: 1px solid #ccc;">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div><router-link :to="{name:'top'}" class="btn btn-link">Project List</router-link></div>
+                    <div><router-link class="btn btn-link" :to="{name: 'project-new'}">Create New Project</router-link></div>
+                    <div><router-link :to="{name: 'about'}" class="btn btn-link">About This Site</router-link></div>
+                </div>
+            </div>
+            <div class="text-right">
+                <span class="text-muted">Copyright &copy; 2019 takemitsu.net All right reserved.</span>
+            </div>
         </footer>
 
     </div>
-
-
-
 </body>
 </html>
