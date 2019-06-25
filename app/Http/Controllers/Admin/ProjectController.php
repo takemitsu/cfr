@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -11,26 +12,13 @@ class ProjectController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')
-            ->only(['update','destroy']);
-    }
-
-    public function getOgp(Request $request)
-    {
-        $this->validate($request, [
-            'url' => 'required|url',
-        ]);
-        $content = file_get_contents($request->url);
-
-        return \ogp\Parser::parse($content);
+        $this->middleware('auth:admin');
     }
 
     public function index(Request $request)
     {
         $request->validate([
             'service_id' => 'nullable|integer',
-            'sort_order' => 'string|in:default,review',
-            'sort_asc' => 'string|in:asc,desc',
             'search' => 'nullable|string|min:0|max:255',
         ]);
 
@@ -54,51 +42,8 @@ class ProjectController extends Controller
             $project->review_count = $project->reviews->count();
             unset($project->reviews);
         }
-        return $projects;
-    }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            // 'service_id' => 'required|exists:services,id',
-            'url' => 'required|url',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image_url' => 'nullable|string|url',
-        ]);
-
-        $services = Service::all();
-        $service = null;
-        foreach ($services as $s) {
-            if (Str::startsWith($request->url, $s->url)) {
-                $service = $s;
-                break;
-            }
-        }
-
-        if ($service == null) {
-            abort(500, '指定のサービスは対応しておりません。');
-        }
-
-        $project = new Project();
-        $project->service_id = $service->id;
-        $project->url = $request->url;
-        $project->title = $request->title;
-        $project->description = $request->description;
-        $project->image_url = $request->image_url;
-        $project->save();
-
-        return $project;
-    }
-
-    public function show(Project $project)
-    {
-        $project->load('reviews');
-        $project->score_total = $project->reviews->avg('score_total');
-        $project->review_count = $project->reviews->count();
-        unset($project->reviews);
-
-        return $project->load('service');
+        return view('admin.project.index', ['projects' => $projects]);
     }
 
     public function update(Request $request, Project $project)

@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')
+            ->only(['update','destroy']);
+    }
+
     public function index(Project $project)
     {
         return Review::where('project_id', $project->id)

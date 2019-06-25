@@ -24,3 +24,16 @@ Route::get('ogp', 'ProjectController@getOgp')->name('ogp');
 Route::apiResource('service', 'ServiceController');
 Route::apiResource('project', 'ProjectController');
 Route::apiResource('project.review', 'ReviewController');
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::name('admin.')->group(function () {
+        Route::get('login', 'Admin\LoginController@showLoginForm')->name('login');
+        Route::post('login', 'Admin\LoginController@login')->name('login-post');
+        Route::get('logout', 'Admin\LoginController@logout')->name('logout');
+        Route::get('home', 'Admin\HomeController@index')->name('home');
+
+        Route::resource('project', 'Admin\ProjectController');
+        Route::resource('project.review', 'Admin\ReviewController');
+    });
+});
