@@ -8,32 +8,39 @@
             </select>
         </div>
 
-        <div v-for="project in projects.data" style="margin-bottom: 30px;">
+        <div class="row">
+            <div v-for="project in projects.data" class="col-xl-3 col-lg-4 col-md-6 col-sm-12"
+                 style="margin-bottom: 30px;">
 
-            <div v-if="project.image_url">
-                <img :src="project.image_url" style="margin-bottom: 10px;">
-            </div>
+                <div v-if="project.image_url">
+                    <img :src="project.image_url" style="margin-bottom: 10px;">
+                </div>
 
-            <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-                <div style="flex: 0 1 160px;">
-                     <div class="text-center">{{project.service.name}}</div>
-                    <div class="text-center">
-                        <star-rating :inline="true" :star-size="15" :read-only="true" :show-rating="false" :increment="0.01" v-model="project.score_total"></star-rating>
+                <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+                    <div style="flex: 0 1 160px;">
+                        <div class="text-center">{{project.service.name}}</div>
+                        <div class="text-center">
+                            <star-rating :inline="true" :star-size="15" :read-only="true" :show-rating="false"
+                                         :increment="0.01" v-model="project.score_total"></star-rating>
+                        </div>
+                        <div class="text-center">{{project.review_count}}
+                            <small>Reviews</small>
+                        </div>
+                        <div class="text-center">
+                            <a :href="project.url" target="_blank">公式サイト</a>
+                        </div>
                     </div>
-                    <div class="text-center">{{project.review_count}} <small>Reviews</small></div>
-                    <div class="text-center">
-                        <a :href="project.url" target="_blank">公式サイト</a>
+                    <div style="flex: 1 2 auto;">
+                        {{project.title}}
                     </div>
                 </div>
-                <div style="flex: 1 2 auto;">
-                    {{project.title}}
+
+                <div class="text-center">
+                    <router-link class="btn btn-primary" :to="{name: 'project-detail', params: {id: project.id}}">
+                        Reviews
+                    </router-link>
                 </div>
             </div>
-
-            <div class="text-center">
-                <router-link class="btn btn-primary" :to="{name: 'project-detail', params: {id: project.id}}">view Review / registration Review</router-link>
-            </div>
-
         </div>
 
         <div v-if="projects.total === 0">
@@ -55,6 +62,7 @@
 
 <script>
     import StarRating from 'vue-star-rating'
+
     export default {
         components: {
             StarRating,
@@ -89,18 +97,18 @@
             async fetchData() {
                 axios.get('project', {params: this.params})
                     .then(res => {
-                        if(this.params.page === 1) {
+                        if (this.params.page === 1) {
                             this.projects = res.data
                         } else {
                             const response = res.data
-                            this.projects.from =response.from
+                            this.projects.from = response.from
                             this.projects.to = response.to
                             this.projects.current_page = response.current_page
                             this.projects.per_page = response.per_page
                             this.projects.total = response.total
 
                             for (let project of res.data.data) {
-                                this.projects.data.push (project)
+                                this.projects.data.push(project)
                             }
                         }
                     })
@@ -108,7 +116,7 @@
                         console.error(e)
                     })
             },
-            async getServices(){
+            async getServices() {
                 axios.get('service')
                     .then(res => {
                         this.services = res.data
