@@ -1,12 +1,41 @@
 <template>
     <section id="project-list">
 
-        <div class="form-group" style="margin: 20px 0;">
-            <select v-model="params.service_id" class="form-control" @change="changeService()">
-                <option value="">選択してください</option>
-                <option v-for="service in services" :value="service.id">{{service.name}}</option>
-            </select>
+        <transition name="form">
+            <div class="row justify-content-center">
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12" style="margin: 20px 0;" v-if="isOpenedSearch">
+                    <div class="form-group">
+                        <label>Select Servicer</label>
+                        <select v-model="params.service_id" class="form-control" @change="changeService()">
+                            <option value="">選択してください</option>
+                            <option v-for="service in services" :value="service.id">{{service.name}}</option>
+                        </select>
+                        <small class="text-muted">サービサーの追加については個別にご連絡ください。</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Input Project Name for Search</label>
+                        <input type="text" v-model="params.search" class="form-control" placeholder="Project Name">
+                        <small class="text-muted">部分一致ですが、全角半角/小文字/大文字などが完全でないと一部でもヒットしない可能性があります。予めご了承ください。</small>
+                    </div>
+                    <div class="btn-group">
+                        <button type="reset" class="btn btn-link" @click="resetParams()">Reset</button>
+                        <button type="button" class="btn btn-primary" @click="changeService">Search</button>
+                    </div>
+                </div>
+            </div>
+        </transition>
+        <div class="row justify-content-center">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" style="margin-bottom: 20px;">
+                <button v-if="isOpenedSearch" type="button" class="btn btn-secondary btn-block"
+                        @click="isOpenedSearch = 0">
+                    Close Search
+                </button>
+                <button v-else type="button" class="btn btn-secondary btn-block" @click="isOpenedSearch = 1">Open Search
+                </button>
+            </div>
         </div>
+
 
         <div class="row">
             <div v-for="project in projects.data" class="col-xl-3 col-lg-4 col-md-6 col-sm-12"
@@ -69,8 +98,12 @@
         },
         data() {
             return {
+                show: 1,
+                isOpenedSearch: 0,
                 params: {
                     page: 1,
+                    service_id: null,
+                    search: '',
                 },
                 projects: {
                     data: [],
@@ -132,13 +165,27 @@
             changeService() {
                 this.params.page = 1
                 this.fetchData()
+            },
+            resetParams: function () {
+                this.params.page = 1
+                this.params.service_id = null
+                this.params.search = ''
+                this.fetchData()
             }
         }
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     img {
         width: 100%;
+    }
+
+    .form-enter-active, .form-leave-active {
+        transition: opacity .5s;
+    }
+
+    .form-enter, .form-leave-to {
+        opacity: 0;
     }
 </style>

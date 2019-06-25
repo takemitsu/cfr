@@ -25,6 +25,7 @@ class ProjectController extends Controller
             'service_id' => 'nullable|integer',
             'sort_order' => 'string|in:default,review',
             'sort_asc' => 'string|in:asc,desc',
+            'search' => 'nullable|string|min:0|max:255',
         ]);
 
         // そのうちソート追加する
@@ -35,6 +36,9 @@ class ProjectController extends Controller
 
         if($request->filled('service_id')) {
             $projects = $projects->where('service_id', $request->service_id);
+        }
+        if ($request->filled('search')) {
+            $projects = $projects->where('title', 'like', '%'.$request->search.'%');
         }
 
         $projects = $projects->paginate();
