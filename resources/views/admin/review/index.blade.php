@@ -2,73 +2,70 @@
 
 @section('content')
 
-    <section id="project-detail" class="row justify-content-center">
-        <div class="col-xl-6 col-lg-6 col-md-8 col-sm-12">
-            <div style="margin-bottom: 20px;">
+    <section id="project-detail">
 
-                <img src="{{$project->image_url}}" style="max-width: 200px; max-height: 200px;" />
-
-                <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-                    <div style="flex: 0 1 160px;">
-                        <div class="text-center">{{$project->service->name}}</div>
-                        <div class="text-center">
-                            {{$project->score_total}}
-                        </div>
-                        <div class="text-center">{{$project->review_count}}
-                            <small>Reviews</small>
-                        </div>
-                        <div class="text-center">
-                            <a href="{{$project->url}}" target="_blank">公式サイト</a>
-                        </div>
-                    </div>
-                    <div style="flex: 1 2 auto;">
+        <table class="table">
+            <tr>
+                <td>
+                    <img src="{{$project->image_url}}" style="max-width: 200px; max-height: 200px;"/>
+                </td>
+                <td>
+                    <div>
                         {{$project->title}}
                     </div>
-                </div>
-
-                <div class="small">{{$project->description}}</div>
-            </div>
-
-            @foreach($reviews as $review)
-                <div>
-                    <hr>
-                    @if($review->product_name)
-                        <div style="margin-bottom: 10px; font-weight: bold;">
-                            {{$review->product_name}}
-                        </div>
-                    @endif
-                    <div style="white-space: pre-wrap; margin-bottom: 10px;">{{$review->comment}}</div>
-
+                    <div>{{$project->service->name}}</div>
                     <div>
-                        <small style="margin-right: 10px;">商　品:</small>
-                        {{$review->score_product}}
-                    </div>
+                        <small>Total Score:</small> {{$project->score_total}}</div>
                     <div>
-                        <small style="margin-right: 10px;">実行者:</small>
-                        {{$review->score_vendor}}
-                    </div>
-                    <div>
-                        <small style="margin-right: 10px;">再購買:</small>
-                        {{$review->score_retry}}
-                    </div>
-                    <div>
-                        <small style="margin-right: 10px;">総　合:</small>
-                        {{$review->score_total}}
-                    </div>
+                        <small>Reviews:</small> {{$project->review_count}}</div>
+                    <div><a href="{{$project->url}}" target="_blank">公式サイト</a></div>
+                </td>
+            </tr>
+        </table>
 
-                    <div class="text-right">{{$review->updated_at}}</div>
-                    <div class="text-right">{{$review->nickname}}</div>
-                </div>
-            @endforeach
-
-            @if($reviews->total() == 0)
-                <div>条件に一致するレビューはありませんでした。</div>
-            @endif
-
-
-            {{$reviews->links()}}
-
+        <div style="margin-bottom: 20px;">
+            <div class="small">{{$project->description}}</div>
         </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>product-name</th>
+                <th>nickname</th>
+                <th>product</th>
+                <th>vendor</th>
+                <th>retry</th>
+                <th>total</th>
+                <th>comment</th>
+                <th>updated_at</th>
+                <th>operation</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($reviews as $review)
+                <tr>
+                    <td>{{$review->product_name}}</td>
+                    <td>{{$review->nickname}}</td>
+                    <td>{{$review->score_product}}</td>
+                    <td>{{$review->score_vendor}}</td>
+                    <td>{{$review->score_retry}}</td>
+                    <td>{{$review->score_total}}</td>
+                    <td>{{$review->comment}}</td>
+                    <td>{{$review->updated_at}}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="{{route('admin.project.review.edit', [$project->id, $review->id])}}"
+                               class="btn btn-warning btn-sm">Edit</a>
+                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+
+        {{$reviews->links()}}
+
     </section>
 
 @endsection
