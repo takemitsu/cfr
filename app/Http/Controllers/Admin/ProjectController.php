@@ -17,7 +17,8 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'service_id' => 'nullable|integer',
+            'project_id' => 'nullable|integer|exists:projects,id',
+            'service_id' => 'nullable|integer|exists:services,id',
             'search' => 'nullable|string|min:0|max:255',
         ]);
 
@@ -29,6 +30,9 @@ class ProjectController extends Controller
 
         if($request->filled('service_id')) {
             $projects = $projects->where('service_id', $request->service_id);
+        }
+        if($request->filled('project_id')) {
+            $projects = $projects->where('id', $request->project_id);
         }
         if ($request->filled('search')) {
             $projects = $projects->where('title', 'like', '%'.$request->search.'%');
@@ -42,7 +46,11 @@ class ProjectController extends Controller
             unset($project->reviews);
         }
 
-        return view('admin.project.index', ['projects' => $projects]);
+        $servicers = Service::all();
+
+        $request->flash();
+
+        return view('admin.project.index', ['projects' => $projects, 'servicers' => $servicers]);
     }
 
     public function edit(Project $project)

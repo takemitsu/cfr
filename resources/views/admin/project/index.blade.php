@@ -2,6 +2,29 @@
 
 @section('content')
 
+    <form method="GET" action="{{route('admin.project.index')}}">
+        <div class="form-row mb-3" >
+            <div class="col-2">
+                <select class="form-control" name="service_id">
+                    <option value="">--</option>
+                    @foreach($servicers as $servicer)
+                        <option value="{{$servicer->id}}">{{$servicer->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-1">
+                <input type="text" class="form-control" name="project_id" value="{{old('project_id')}}"
+                       placeholder="project id">
+            </div>
+            <div class="col-4">
+                <input type="text" class="form-control" name="search" value="{{old('search')}}" placeholder="project name">
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">検索</button>
+            </div>
+        </div>
+    </form>
+
     <table class="table">
         <thead>
         <tr>
@@ -21,7 +44,7 @@
                 <td>{{$project->id}}</td>
                 <td>{{$project->service->name}}</td>
                 <td>
-                    <img src="{{$project->image_url}}" style="max-width: 100px; max-height: 100px;" />
+                    <img src="{{$project->image_url}}" style="max-width: 100px; max-height: 100px;"/>
                 </td>
                 <td>
                     <a href="{{route('admin.project.review.index', [$project->id])}}">{{$project->title}}</a>
@@ -35,7 +58,9 @@
                 <td>
                     <div class="btn-group">
                         <a href="{{route('admin.project.edit', [$project->id])}}" class="btn btn-warning btn-sm">編集</a>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteProject({{$project->id}})">削除</button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteProject({{$project->id}})">
+                            削除
+                        </button>
                     </div>
                 </td>
             </tr>
@@ -51,7 +76,8 @@
             <div class="modal-content">
                 <div class="modal-content border-0">
                     <div class="alert alert-danger alert-dismissible fade show m-0" role="alert">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="閉じる"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="閉じる"><span
+                                    aria-hidden="true">&times;</span></button>
                         <strong>Error!</strong> <span id="errorMessage"></span>
                     </div>
                 </div>
@@ -70,16 +96,15 @@
                     url: '/admin/project/' + encodeURIComponent(id),
                 })
                     .then((a, b, c) => {
-                        console.log(a, b, c)
+                        console.log(a, b, c);
                         location.reload()
                     })
                     .catch((error) => {
-                        console.log(error)
-                        $('#errorMessage').text(error.message)
-                        $('#alertModal').modal('show')
+                        console.log(error);
+                        $('#errorMessage').text(error.message);
+                        $('#alertModal').modal('show');
                     })
             }
-        }
-
+        };
     </script>
 @endsection
