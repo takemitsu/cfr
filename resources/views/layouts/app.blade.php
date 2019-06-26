@@ -11,10 +11,10 @@
 
     <meta name="robots" content="ALL" />
     <meta name="description" content="クラウドファンディングで得たモノを共有したい" />
-    <meta name="keywords" content="Crowdfunding,review,share,クラウドファンディング,レビュー,共有" />
+    <meta name="keywords" content="Crowdfunding,review,share,クラウドファンディング,レビュー,共有,くらふぁん" />
     <meta property="og:title" content="プロジェクト一覧">
     <meta property="og:description" content="クラウドファンディングで 得たモノ を共有したい！">
-    <meta property="og:site_name" content="Crowdfunding Reviews(クラウドファンディングレビュー)">
+    <meta property="og:site_name" content="{{config('app.name')}}">
     <meta property="og:type" content="website" />
     <meta property="og:image" content="{{config('app.url')}}/image/og_image.png" />
     <meta name="twitter:card" content="summary">
