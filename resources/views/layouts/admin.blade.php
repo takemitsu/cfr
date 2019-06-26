@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+@yield('javascript')
 </head>
 <body>
     <div id="app">
@@ -39,9 +40,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-@auth('admin')
-    <li><a href="{{route('admin.project.index')}}">Projects</a></li>
-@endauth
+                    @auth('admin')
+                        <li><a href="{{route('admin.project.index')}}">Projects</a></li>
+                    @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->

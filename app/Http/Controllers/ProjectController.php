@@ -9,12 +9,6 @@ use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')
-            ->only(['update','destroy']);
-    }
-
     public function getOgp(Request $request)
     {
         $this->validate($request, [
@@ -99,33 +93,5 @@ class ProjectController extends Controller
         unset($project->reviews);
 
         return $project->load('service');
-    }
-
-    public function update(Request $request, Project $project)
-    {
-        $request->validate([
-            'service_id' => 'required|exists:services,id',
-            'url' => 'required|url',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image_url' => 'url',
-        ]);
-
-        $project->service_id = $request->service_id;
-        $project->url = $request->url;
-        $project->title = $request->title;
-        $project->description = $request->description;
-        $project->image_url = $request->image_url;
-        $project->save();
-
-        return $project;
-    }
-
-    public function destroy(Project $project)
-    {
-        // TODO: レビューがあるときは削除させないとか。
-
-        $project->delete();
-        return;
     }
 }

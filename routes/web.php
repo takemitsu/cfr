@@ -22,7 +22,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('ogp', 'ProjectController@getOgp')->name('ogp');
 
 Route::apiResource('service', 'ServiceController');
-Route::apiResource('project', 'ProjectController');
+Route::apiResource('project', 'ProjectController')
+    ->only(['index', 'store', 'show']);
 Route::apiResource('project.review', 'ReviewController');
 
 
@@ -33,7 +34,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('logout', 'Admin\LoginController@logout')->name('logout');
         Route::get('home', 'Admin\HomeController@index')->name('home');
 
-        Route::resource('project', 'Admin\ProjectController');
+        Route::resource('project', 'Admin\ProjectController')
+            ->only(['index', 'edit', 'update', 'destroy']);
+
         Route::resource('project.review', 'Admin\ReviewController');
     });
 });

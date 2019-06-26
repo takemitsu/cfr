@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Service;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -46,6 +45,12 @@ class ProjectController extends Controller
         return view('admin.project.index', ['projects' => $projects]);
     }
 
+    public function edit(Project $project)
+    {
+        $servicers = Service::all();
+        return view('admin.project.edit', ['project' => $project, 'servicers' => $servicers]);
+    }
+
     public function update(Request $request, Project $project)
     {
         $request->validate([
@@ -54,6 +59,12 @@ class ProjectController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'image_url' => 'url',
+        ],[],[
+            'service_id' => 'サービサー',
+            'url' => 'URL',
+            'title' => 'タイトル',
+            'description' => '詳細',
+            'image_url' => 'イメージURL',
         ]);
 
         $project->service_id = $request->service_id;
@@ -63,13 +74,11 @@ class ProjectController extends Controller
         $project->image_url = $request->image_url;
         $project->save();
 
-        return $project;
+        return redirect()->route('admin.project.index');
     }
 
     public function destroy(Project $project)
     {
-        // TODO: レビューがあるときは削除させないとか。
-
         $project->delete();
         return;
     }
