@@ -23,19 +23,19 @@
 
                 <!-- TODO: Star 系のコンポーネント -->
                 <div class="form-group">
-                    <label>商 品 (必須)</label>
+                    <label>商 品 (必須)<small style="margin-left: 10px;">- 良い商品か -</small></label>
                     <star-rating v-model="form.score_product"></star-rating>
                 </div>
                 <div class="form-group">
-                    <label>実行者 (必須)</label>
+                    <label>実行者 (必須)<small style="margin-left: 10px;">- 良い実行者か -</small></label>
                     <star-rating v-model="form.score_vendor"></star-rating>
                 </div>
                 <div class="form-group">
-                    <label>再購買 (必須)</label>
+                    <label>再購買 (必須)<small style="margin-left: 10px;">- また同じ実行者から買いたいか -</small></label>
                     <star-rating v-model="form.score_retry"></star-rating>
                 </div>
                 <div class="form-group">
-                    <label>総 合 (必須)</label>
+                    <label>総 合 (必須)<small style="margin-left: 10px;">- 総合的にいい感じか -</small></label>
                     <star-rating v-model="form.score_total"></star-rating>
                 </div>
 
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary btn-block" @click="change_confirm()">Confirm</button>
+                    <button type="button" class="btn btn-primary btn-block" @click="change_confirm()">確認する！</button>
                 </div>
 
             </div>
@@ -85,12 +85,12 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="button" class="btn btn-secondary btn-block" @click="is_confirm=false">Back to Edit page</button>
+                    <button type="button" class="btn btn-secondary btn-block" @click="is_confirm=false">戻って編集する</button>
 
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary btn-block" @click="submit()">
-                        Registration Review!!
+                        レビューを投稿する！
                     </button>
                 </div>
             </div>

@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary" @click="change_confirm()">check</button>
+                    <button type="button" class="btn btn-primary" @click="change_confirm()">確認する！</button>
                 </div>
 
             </div>
@@ -55,8 +55,8 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="button" class="btn btn-secondary" @click="is_confirm=false">edit</button>
-                    <button type="button" class="btn btn-primary" @click="submit()">finish</button>
+                    <button type="button" class="btn btn-secondary" @click="is_confirm=false">修正する</button>
+                    <button type="button" class="btn btn-primary" @click="submit()">登録する！</button>
                 </div>
             </div>
 

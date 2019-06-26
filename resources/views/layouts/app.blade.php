@@ -45,13 +45,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li><router-link :to="{name: 'about'}" class="btn btn-link">about</router-link></li>
+                        <li><router-link :to="{name: 'about'}" class="btn btn-link">このサイトについて</router-link></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <li><router-link class="btn btn-primary btn-sm" :to="{name: 'project-new'}">New Project</router-link></li>
+                        <li><router-link class="btn btn-primary btn-sm" :to="{name: 'project-new'}">プロジェクトを登録する</router-link></li>
 
                         <!-- Authentication Links -->
                         @auth
@@ -85,9 +85,9 @@
         <footer class="footer mt-auto py-3 container" style="border-top: 1px solid #ccc;">
             <div class="row justify-content-center">
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <div><router-link :to="{name:'top'}" class="btn btn-link">Project List</router-link></div>
-                    <div><router-link class="btn btn-link" :to="{name: 'project-new'}">Create New Project</router-link></div>
-                    <div><router-link :to="{name: 'about'}" class="btn btn-link">About This Site</router-link></div>
+                    <div><router-link :to="{name:'top'}" class="btn btn-link">プロジェクトリスト</router-link></div>
+                    <div><router-link class="btn btn-link" :to="{name: 'project-new'}">プロジェクトを登録する</router-link></div>
+                    <div><router-link :to="{name: 'about'}" class="btn btn-link">このサイトについて</router-link></div>
                 </div>
             </div>
             <div class="text-right">

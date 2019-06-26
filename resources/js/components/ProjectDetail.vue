@@ -29,15 +29,30 @@
 
                 <div class="text-center" style="margin-top: 20px;">
                     <router-link class="btn btn-primary" :to="{name: 'review-new', params: {id: project.id}}">
-                        Registration New Review
+                        レビューを書く！
                     </router-link>
                 </div>
+            </div>
+
+            <div v-if="is_opened_description" style="color: #666;">
+            商品名：商品名があるば、その名前<br>
+            コメント：各人が感じたことなど<br>
+            商品：良い商品か<br>
+            実行者：良い実行者か<br>
+            再購買：また同じ実行者から買いたいか<br>
+            総合：総合的にいい感じか<br>
+            レビューの日時：レビューを書いた日<br>
+            ニックネーム：レビュワーの名前<br>
+            </div>
+            <div class="text-center">
+                <button v-if="is_opened_description" type="button" class="btn btn-link" @click="is_opened_description = 0">レビュー説明を閉じる</button>
+                <button v-else type="button" class="btn btn-link" @click="is_opened_description = 1">レビュー説明を開く</button>
             </div>
 
             <div v-for="review in reviews.data">
                 <hr>
                 <div v-if="review.product_name" style="margin-bottom: 10px; font-weight: bold;">
-                    {{review.product_name}}
+                    商品名：{{review.product_name}}
                 </div>
                 <div style="white-space: pre-wrap; margin-bottom: 10px;">{{review.comment}}</div>
 
@@ -81,7 +96,7 @@
 
             <div class="text-center" style="margin-top: 20px;">
                 <router-link class="btn btn-primary" :to="{name: 'review-new', params: {id: project.id}}">
-                    Registration New Review
+                    レビューを書く！
                 </router-link>
             </div>
         </div>
@@ -115,7 +130,8 @@
                     per_page: null,
                 },
                 project: {},
-                project_id: this.$route.params.id
+                project_id: this.$route.params.id,
+                is_opened_description: 0,
             }
         },
         mounted() {

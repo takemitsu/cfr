@@ -6,7 +6,7 @@
 
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12" style="margin: 20px 0;" v-if="isOpenedSearch">
                     <div class="form-group">
-                        <label>Select Servicer</label>
+                        <label>サービサー選択</label>
                         <select v-model="params.service_id" class="form-control" @change="changeService()">
                             <option value="">選択してください</option>
                             <option v-for="service in services" :value="service.id">{{service.name}}</option>
@@ -14,13 +14,13 @@
                         <small class="text-muted">サービサーの追加については個別にご連絡ください。</small>
                     </div>
                     <div class="form-group">
-                        <label>Input Project Name for Search</label>
+                        <label>プロジェクト名入力</label>
                         <input type="text" v-model="params.search" class="form-control" placeholder="Project Name">
                         <small class="text-muted">部分一致ですが、全角半角/小文字/大文字などが完全でないと一部でもヒットしない可能性があります。予めご了承ください。</small>
                     </div>
                     <div class="btn-group">
-                        <button type="reset" class="btn btn-link" @click="resetParams()">Reset</button>
-                        <button type="button" class="btn btn-primary" @click="changeService">Search</button>
+                        <button type="reset" class="btn btn-link" @click="resetParams()">リセット</button>
+                        <button type="button" class="btn btn-primary" @click="changeService">検索する！</button>
                     </div>
                 </div>
             </div>
@@ -29,9 +29,9 @@
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" style="margin-bottom: 20px;">
                 <button v-if="isOpenedSearch" type="button" class="btn btn-secondary btn-block"
                         @click="isOpenedSearch = 0">
-                    Close Search
+                    検索を閉じる
                 </button>
-                <button v-else type="button" class="btn btn-secondary btn-block" @click="isOpenedSearch = 1">Open Search
+                <button v-else type="button" class="btn btn-secondary btn-block" @click="isOpenedSearch = 1">検索を開く
                 </button>
             </div>
         </div>
@@ -66,7 +66,7 @@
 
                 <div class="text-center">
                     <router-link class="btn btn-primary" :to="{name: 'project-detail', params: {id: project.id}}">
-                        Reviews
+                        レビューを見る！
                     </router-link>
                 </div>
             </div>
@@ -82,7 +82,7 @@
             </div>
 
             <div v-if="projects.total > projects.to" class="text-center">
-                <button type="button" @click="loadMore()" class="btn btn-secondary">More Projects</button>
+                <button type="button" @click="loadMore()" class="btn btn-secondary">もっと表示する！</button>
             </div>
         </div>
 
