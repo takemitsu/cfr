@@ -7,7 +7,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ReviewController extends Controller
+class ProjectReviewController extends Controller
 {
     public function __construct()
     {

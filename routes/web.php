@@ -37,7 +37,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::resource('project', 'Admin\ProjectController')
             ->only(['index', 'edit', 'update', 'destroy']);
-        Route::resource('project.review', 'Admin\ReviewController')
+        Route::resource('project.review', 'Admin\ProjectReviewController')
             ->only(['index', 'edit', 'update', 'destroy']);
     });
 });
