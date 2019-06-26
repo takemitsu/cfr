@@ -6,13 +6,13 @@
         <thead>
         <tr>
             <th style="width: 60px;">id</th>
-            <th style="width: 130px;">servicer</th>
-            <th style="width: 130px;">image</th>
-            <th>title</th>
-            <th>reviews</th>
-            <th>score</th>
+            <th style="width: 130px;">サービスサー</th>
+            <th style="width: 130px;">イメージ</th>
+            <th>タイトル</th>
+            <th style="width: 100px;">レビュー数</th>
+            <th style="width: 100px;">平均総合<br>スコア</th>
             <th style="width: 100px;">公式サイト</th>
-            <th style="width: 130px;">operation</th>
+            <th style="width: 130px;">操作</th>
         </tr>
         </thead>
         <tbody>
@@ -26,16 +26,16 @@
                 <td>
                     <a href="{{route('admin.project.review.index', [$project->id])}}">{{$project->title}}</a>
                 </td>
-                <td>{{$project->review_count}}</td>
-                <td>{{$project->score_total}}</td>
+                <td class="text-right">{{$project->review_count}}</td>
+                <td class="text-right">{{$project->score_total}}</td>
                 <td>
                     <a href="{{$project->url}}">公式サイト</a>
                 </td>
 
                 <td>
                     <div class="btn-group">
-                        <a href="{{route('admin.project.edit', [$project->id])}}" class="btn btn-warning btn-sm">Edit</a>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteProject({{$project->id}})">Delete</button>
+                        <a href="{{route('admin.project.edit', [$project->id])}}" class="btn btn-warning btn-sm">編集</a>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteProject({{$project->id}})">削除</button>
                     </div>
                 </td>
             </tr>

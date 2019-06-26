@@ -24,7 +24,8 @@ Route::get('ogp', 'ProjectController@getOgp')->name('ogp');
 Route::apiResource('service', 'ServiceController');
 Route::apiResource('project', 'ProjectController')
     ->only(['index', 'store', 'show']);
-Route::apiResource('project.review', 'ReviewController');
+Route::apiResource('project.review', 'ReviewController')
+    ->only(['index', 'store']);
 
 
 Route::group(['prefix' => 'admin'], function () {
@@ -36,7 +37,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::resource('project', 'Admin\ProjectController')
             ->only(['index', 'edit', 'update', 'destroy']);
-
-        Route::resource('project.review', 'Admin\ReviewController');
+        Route::resource('project.review', 'Admin\ReviewController')
+            ->only(['index', 'edit', 'update', 'destroy']);
     });
 });
