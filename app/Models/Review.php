@@ -12,6 +12,11 @@ class Review extends Model
         parent::boot();
     }
 
+    public function service()
+    {
+        return $this->belongsTo('App\Models\Service');
+    }
+
     public function project()
     {
         return $this->belongsTo('App\Models\Project');

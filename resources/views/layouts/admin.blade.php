@@ -43,6 +43,7 @@
                         @auth('admin')
                             <li class="nav-item"><a class="nav-link" href="{{route('admin.service.index')}}">Services</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{route('admin.project.index')}}">Projects</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{route('admin.review.index')}}">Reviews</a></li>
                         @endauth
                     </ul>
 

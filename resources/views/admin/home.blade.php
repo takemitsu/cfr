@@ -32,7 +32,7 @@
                         <tr>
                             <th>Review</th>
                             <td>{{$review_count}}</td>
-                            <td><a class="btn btn-link btn-sm" href="{{route('admin.service.index')}}">List</a></td>
+                            <td><a class="btn btn-link btn-sm" href="{{route('admin.review.index')}}">List</a></td>
                         </tr>
                         </tbody>
                     </table>

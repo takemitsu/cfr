@@ -8,7 +8,7 @@
                 <select class="form-control" name="service_id">
                     <option value="">--</option>
                     @foreach($servicers as $servicer)
-                        <option value="{{$servicer->id}}">{{$servicer->name}}</option>
+                        <option value="{{$servicer->id}}" {{old('service_id') == $servicer->id ? "selected" : ""}} >{{$servicer->name}}</option>
                     @endforeach
                 </select>
             </div>
