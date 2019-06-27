@@ -11,7 +11,7 @@
 
     <meta name="robots" content="ALL" />
     <meta name="description" content="クラウドファンディングで得たモノを共有したい" />
-    <meta name="keywords" content="Crowdfunding,review,share,クラウドファンディング,レビュー,共有,くらふぁん,{{config('app.name')}}" />
+    <meta name="keywords" content="Crowdfunding,review,share,クラウドファンディング,レビュー,評判,評価,どうなの？,共有,くらふぁん,{{config('app.name')}}" />
     <meta property="og:title" content="{{config('app.name')}}">
     <meta property="og:description" content="クラウドファンディングで 得たモノ を共有したい！">
     <meta property="og:site_name" content="{{config('app.name')}}">
