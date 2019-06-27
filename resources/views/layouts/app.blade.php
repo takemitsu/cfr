@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div class="text-right">
-                <span class="text-muted">Copyright &copy; 2019 takemitsu.net All right reserved.</span>
+                <span class="text-muted">Copyright &copy; 2019 cf-fun.com All right reserved.</span>
             </div>
         </footer>
 
