@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('logout', 'Admin\LoginController@logout')->name('logout');
         Route::get('home', 'Admin\HomeController@index')->name('home');
 
+        Route::resource('service', 'Admin\ServiceController');
         Route::resource('project', 'Admin\ProjectController')
             ->only(['index', 'edit', 'update', 'destroy']);
         Route::resource('project.review', 'Admin\ProjectReviewController')

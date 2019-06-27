@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
+use App\Models\Review;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,6 +27,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        $service_count = Service::count();
+        $project_count = Project::count();
+        $review_count = Review::count();
+
+        return view('admin.home', [
+            'service_count' => $service_count,
+            'project_count' => $project_count,
+            'review_count' => $review_count,
+        ]);
     }
 }

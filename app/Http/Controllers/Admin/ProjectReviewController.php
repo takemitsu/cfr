@@ -26,7 +26,7 @@ class ProjectReviewController extends Controller
             ->orderBy('id', 'desc')
             ->paginate();
 
-        return view('admin.review.index', [
+        return view('admin.project.review.index', [
             'project' => $project,
             'reviews' => $reviews,
         ]);
@@ -34,7 +34,7 @@ class ProjectReviewController extends Controller
 
     public function edit(Project $project, Review $review)
     {
-        return view('admin.review.edit', [
+        return view('admin.project.review.edit', [
             'project' => $project,
             'review' => $review,
         ]);

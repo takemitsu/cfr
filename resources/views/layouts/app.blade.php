@@ -45,13 +45,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li><router-link :to="{name: 'about'}" class="btn btn-link">このサイトについて</router-link></li>
+                        <li class="nav-item"><router-link :to="{name: 'about'}" class="nav-link">このサイトについて</router-link></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <li><router-link class="btn btn-primary btn-sm" :to="{name: 'project-new'}">プロジェクトを登録する</router-link></li>
+                        <li class="nav-item"><router-link class="btn btn-outline-primary btn-sm my-2 my-sm-0" :to="{name: 'project-new'}">プロジェクトを登録する</router-link></li>
 
                         <!-- Authentication Links -->
                         @auth

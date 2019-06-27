@@ -40,9 +40,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                    @auth('admin')
-                        <li><a href="{{route('admin.project.index')}}">Projects</a></li>
-                    @endauth
+                        @auth('admin')
+                            <li class="nav-item"><a class="nav-link" href="{{route('admin.service.index')}}">Services</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{route('admin.project.index')}}">Projects</a></li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -27,7 +27,7 @@
             <div class="small">{{$project->description}}</div>
         </div>
 
-        <table class="table">
+        <table class="table table-hover bg-white">
             <thead>
             <tr>
                 <th style="width: 60px;">id</th>
