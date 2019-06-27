@@ -8,6 +8,12 @@ require('./bootstrap');
 
 import Vue from 'vue'
 import router from './router'
+import VueAnalytics from 'vue-analytics'
+
+Vue.use(VueAnalytics, {
+    id: 'UA-142857213-1',
+    router
+})
 
 /**
  * The following block of code may be used to automatically register your
