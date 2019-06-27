@@ -27,6 +27,9 @@ Route::apiResource('project', 'ProjectController')
 Route::apiResource('project.review', 'ReviewController')
     ->only(['index', 'store']);
 
+Route::apiResource('inquiry', 'InquiryController')
+    ->only(['index', 'store', 'show']);
+Route::post('inquiry/{inquiry}', 'InquiryController@postDetail');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::name('admin.')->group(function () {

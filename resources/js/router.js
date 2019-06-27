@@ -7,6 +7,8 @@ import ProjectEdit from './components/ProjectEdit'
 import ProjectDetail from './components/ProjectDetail'
 import ReviewEdit from './components/ReviewEdit'
 import About from './components/about'
+import Inquiry from './components/inquiry'
+import InquiryDetail from './components/inquiryDetail'
 
 Vue.use(VueRouter)
 
@@ -45,6 +47,16 @@ const routes = [
         path: '/about',
         component: About,
         name: 'about',
+    },
+    {
+        path: '/inquiry',
+        component: Inquiry,
+        name: 'inquiry',
+    },
+    {
+        path: '/inquiry/:id',
+        component: InquiryDetail,
+        name: 'inquiry-detail'
     },
 ]
 

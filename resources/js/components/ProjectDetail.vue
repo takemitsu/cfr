@@ -35,17 +35,19 @@
             </div>
 
             <div v-if="is_opened_description" style="color: #666;">
-            商品名：商品名があるば、その名前<br>
-            コメント：各人が感じたことなど<br>
-            商品：良い商品か<br>
-            実行者：良い実行者か<br>
-            再購買：また同じ実行者から買いたいか<br>
-            総合：総合的にいい感じか<br>
-            レビューの日時：レビューを書いた日<br>
-            ニックネーム：レビュワーの名前<br>
+                商品名：商品名があるば、その名前<br>
+                コメント：各人が感じたことなど<br>
+                商品：良い商品か<br>
+                実行者：良い実行者か<br>
+                再購買：また同じ実行者から買いたいか<br>
+                総合：総合的にいい感じか<br>
+                レビューの日時：レビューを書いた日<br>
+                ニックネーム：レビュワーの名前<br>
             </div>
             <div class="text-center">
-                <button v-if="is_opened_description" type="button" class="btn btn-link" @click="is_opened_description = 0">レビュー説明を閉じる</button>
+                <button v-if="is_opened_description" type="button" class="btn btn-link"
+                        @click="is_opened_description = 0">レビュー説明を閉じる
+                </button>
                 <button v-else type="button" class="btn btn-link" @click="is_opened_description = 1">レビュー説明を開く</button>
             </div>
 
