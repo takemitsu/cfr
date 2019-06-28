@@ -7,6 +7,7 @@ import ProjectEdit from './components/ProjectEdit'
 import ProjectDetail from './components/ProjectDetail'
 import ReviewEdit from './components/ReviewEdit'
 import About from './components/about'
+import Library from './components/library'
 import Inquiry from './components/inquiry'
 import InquiryDetail from './components/inquiryDetail'
 
@@ -47,6 +48,11 @@ const routes = [
         path: '/about',
         component: About,
         name: 'about',
+    },
+    {
+        path: '/library',
+        component: Library,
+        name: 'library',
     },
     {
         path: '/inquiry',

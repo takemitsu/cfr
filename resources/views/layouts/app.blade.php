@@ -89,6 +89,7 @@
                     <div><router-link class="btn btn-link" :to="{name: 'project-new'}">プロジェクトを登録する</router-link></div>
                     <div><router-link :to="{name: 'about'}" class="btn btn-link">このサイトについて</router-link></div>
                     <div><router-link :to="{name: 'inquiry'}" class="nav-link">ご質問・ご感想など</router-link></div>
+                    <div><router-link :to="{name: 'library'}" class="nav-link">使用環境言語など</router-link></div>
                 </div>
             </div>
             <div class="text-right">
